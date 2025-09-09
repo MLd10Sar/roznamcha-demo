@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دموی زنده روزنامچه</title>
+    <title>چالش روزنامچه</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="demo-container">
-
         <header class="app-header">
             <h1>روزنامچه</h1>
-            <div class="timer">وقت باقی مانده: <span id="timer">60</span></div>
+            <div class="timer">وقت باقی مانده: <span id="timer">90</span></div> <!-- Increased time -->
         </header>
 
         <main class="ledger">
@@ -20,44 +19,56 @@
                 <h2>خلاصه حسابات</h2>
                 <div class="metric">
                     <span>موجودی گدام (نوشابه):</span>
-                    <strong id="inventory-count">۰ دانه</strong>
+                    <strong id="inventory-count">۱۰ دانه</strong>
                 </div>
+                <!-- NEW: Added Customer Balance -->
                 <div class="metric">
-                    <span>مجموع طلب:</span>
-                    <strong id="receivable-total">۰ افغانی</strong>
+                    <span>طلب از احمد:</span>
+                    <strong id="receivable-ahmad">۰ افغانی</strong>
                 </div>
             </div>
 
             <div class="task-prompt" id="task-prompt">
+                <!-- The text inside will now be set by JavaScript -->
                 <p id="task-text"></p>
             </div>
 
             <div class="transaction-list" id="transaction-list">
-                <!-- Transactions will be added here dynamically by JavaScript -->
+                <!-- Transactions added here dynamically -->
             </div>
         </main>
 
         <footer class="action-bar">
-            <button id="btn-purchase" disabled>ثبت خرید</button>
-            <button id="btn-sale" disabled>ثبت فروش</button>
+            <!-- Renamed buttons for clarity -->
+            <button id="btn-action-1">...</button>
+            <button id="btn-action-2">...</button>
         </footer>
-
     </div>
 
-    <!-- Final Win/Lose Screen -->
+    <!-- Final screen with more details -->
     <div class="final-screen" id="final-screen">
         <div class="final-content">
             <h2 id="final-title"></h2>
             <p id="final-message"></p>
-            <div class="score">امتیاز شما: <span id="final-score">0</span></div>
+            <div class="score-container">
+                <div class="score-item">
+                    <div>امتیاز شما</div>
+                    <div id="final-score">0</div>
+                </div>
+                <div class="score-item">
+                    <div>وقت باقی مانده</div>
+                    <div id="time-bonus">0s</div>
+                </div>
+            </div>
             <a href="https://github.com/MLd10Sar/Esmat/releases/download/v1.0.0/app-release.apk" class="download-button">دانلود نسخه کامل</a>
         </div>
     </div>
 
-    <!-- Audio files for sound effects -->
+    <!-- Audio files -->
     <audio id="sound-success" src="https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3" preload="auto"></audio>
     <audio id="sound-win" src="https://assets.mixkit.co/sfx/preview/mixkit-video-game-win-2016.mp3" preload="auto"></audio>
     <audio id="sound-lose" src="https://assets.mixkit.co/sfx/preview/mixkit-player-losing-or-failing-2042.mp3" preload="auto"></audio>
+    <audio id="sound-click" src="https://assets.mixkit.co/sfx/preview/mixkit-camera-shutter-hard-click-1463.mp3" preload="auto"></audio>
 
     <script src="script.js"></script>
 </body>
