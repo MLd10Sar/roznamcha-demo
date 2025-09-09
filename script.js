@@ -1,10 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Game State ---
-    let tasks = [
-        { id: 1, action: 'purchase', amount: 4000, inventoryChange: 10, completed: false, el: document.getElementById('task-1') },
-        { id: 2, action: 'sale', amount: 1000, inventoryChange: -2, receivable: 1000, completed: false, el: document.getElementById('task-2') },
-        { id: 3, action: 'check', completed: false, el: document.getElementById('task-3') }
+    // --- Game State & Data ---
+    const tasks = [
+        { id: 'task-1', action: 'purchase', amount: 4000, inventoryChange: 10 },
+        { id: 'task-2', action: 'sale', amount: 1000, inventoryChange: -2, receivable: 1000 },
+        { id: 'task-3', action: 'check', expectedInventory: 8 }
     ];
+    let gameState = {
+        purchases: 0, sales: 0, inventory: 0, receivable: 0
+    };
     let currentTaskIndex = 0;
     let timeLeft = 60;
     let timerInterval;
@@ -16,8 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
         totalPurchases: document.getElementById('total-purchases'),
         inventoryCount: document.getElementById('inventory-count'),
         receivableAhmad: document.getElementById('receivable-ahmad'),
-        btnPurchase: document.getElementById('btn-purchase'),
-        btnSale: document.getElementById('btn-sale'),
         finalScreen: document.getElementById('final-screen'),
         finalTitle: document.getElementById('final-title'),
         finalMessage: document.getElementById('final-message'),
@@ -25,58 +26,95 @@ document.addEventListener('DOMContentLoaded', () => {
         soundSuccess: document.getElementById('sound-success'),
         soundWin: document.getElementById('sound-win'),
         soundLose: document.getElementById('sound-lose'),
+        taskCards: document.querySelectorAll('.task-card'),
+        taskButtons: document.querySelectorAll('.task-button')
     };
 
-    // --- Game Logic ---
+    // --- Game Logic Functions ---
     function startTimer() {
         timerInterval = setInterval(() => {
             timeLeft--;
             ui.timer.textContent = timeLeft;
-            if (timeLeft <= 5) {
-                ui.timer.style.color = '#fff';
-                ui.timer.style.backgroundColor = '#c82333';
+            if (timeLeft <= 10 && !ui.timer.parentElement.style.animation) {
+                ui.timer.parentElement.style.animation = 'blinker 1s linear infinite';
             }
             if (timeLeft <= 0) {
-                endGame(false); // Lose
+                endGame(false); // Lose condition
             }
         }, 1000);
     }
 
-    function nextTask() {
-        tasks[currentTaskIndex].el.classList.remove('active');
-        tasks[currentTaskIndex].el.classList.add('completed');
-        currentTaskIndex++;
-        if (currentTaskIndex < tasks.length) {
-            tasks[currentTaskIndex].el.classList.add('active');
-        } else {
-            setTimeout(() => endGame(true), 500); // Win with a slight delay
+    function playSound(soundElement) {
+        if (soundElement) {
+            soundElement.currentTime = 0;
+            soundElement.play().catch(e => console.log("Audio play failed:", e));
         }
     }
 
-    function updateDashboardValue(key, change) {
-        const el = ui[key];
-        let currentValue = parseFloat(el.textContent.replace(/,/g, '')) || 0;
-        const newValue = currentValue + change;
-        
-        // Animate the update
-        el.style.transform = 'scale(1.2)';
-        el.style.color = '#00BFA5';
-        setTimeout(() => {
-            el.textContent = newValue.toLocaleString('en-US');
-            el.style.transform = 'scale(1)';
-            el.style.color = '#212529';
-        }, 200);
+    function updateDashboardUI() {
+        const animateEl = (el, value) => {
+            el.textContent = value.toLocaleString('en-US');
+            el.style.transform = 'scale(1.3)';
+            el.style.color = 'var(--secondary-color)';
+            setTimeout(() => {
+                el.style.transform = 'scale(1)';
+                el.style.color = 'var(--dark-text)';
+            }, 300);
+        };
+        animateEl(ui.totalPurchases, gameState.purchases);
+        animateEl(ui.totalSales, gameState.sales);
+        animateEl(ui.inventoryCount, gameState.inventory);
+        animateEl(ui.receivableAhmad, gameState.receivable);
     }
 
+    function advanceTask() {
+        if (currentTaskIndex < ui.taskCards.length) {
+            ui.taskCards[currentTaskIndex].classList.remove('active');
+            ui.taskCards[currentTaskIndex].classList.add('completed');
+        }
+        currentTaskIndex++;
+        if (currentTaskIndex < ui.taskCards.length) {
+            ui.taskCards[currentTaskIndex].classList.add('active');
+            ui.taskCards[currentTaskIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+            setTimeout(() => endGame(true), 500); // Win
+        }
+    }
+
+    function handleTask(action) {
+        const currentTask = tasks[currentTaskIndex];
+        if (action !== currentTask.action) return; // Ignore clicks on wrong buttons
+
+        playSound(ui.soundSuccess);
+        switch(action) {
+            case 'purchase':
+                gameState.purchases += currentTask.amount;
+                gameState.inventory += currentTask.inventoryChange;
+                break;
+            case 'sale':
+                gameState.sales += currentTask.amount;
+                gameState.inventory += currentTask.inventoryChange;
+                gameState.receivable += currentTask.receivable;
+                break;
+            case 'check':
+                const userInput = parseInt(document.getElementById('inventory-input').value, 10);
+                if (userInput !== currentTask.expectedInventory) {
+                    alert('اشتباه است! حساب دقیق نشان میدهد که باید ' + currentTask.expectedInventory + ' دانه باقی مانده باشد. دوباره سعی کنید.');
+                    return; // Don't advance task on wrong answer
+                }
+                break;
+        }
+        updateDashboardUI();
+        advanceTask();
+    }
+    
     function endGame(isWin) {
         clearInterval(timerInterval);
-        ui.btnPurchase.disabled = true;
-        ui.btnSale.disabled = true;
-        
+        ui.taskButtons.forEach(btn => btn.disabled = true);
         if (isWin) {
             ui.finalTitle.textContent = "عالی بود!";
             ui.finalMessage.textContent = "شما با موفقیت حسابات را منظم کردید. دیدید که با روزنامچه چقدر آسان است!";
-            ui.finalScore.textContent = timeLeft * 10; // Score based on time left
+            ui.finalScore.textContent = timeLeft * 10;
             playSound(ui.soundWin);
         } else {
             ui.finalTitle.textContent = "وقت تمام شد!";
@@ -86,45 +124,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         ui.finalScreen.classList.add('show');
     }
-    
-    function playSound(soundElement) {
-        if (soundElement) {
-            soundElement.currentTime = 0;
-            soundElement.play();
-        }
+
+    // --- Initialize Game ---
+    function init() {
+        ui.taskButtons.forEach(button => {
+            button.addEventListener('click', () => handleTask(button.dataset.action));
+        });
+        ui.taskCards[0].classList.add('active');
+        startTimer();
     }
 
-    // --- Event Listeners ---
-    ui.btnPurchase.addEventListener('click', () => {
-        if (tasks[currentTaskIndex].action === 'purchase') {
-            const task = tasks[currentTaskIndex];
-            updateDashboardValue('totalPurchases', task.amount);
-            updateDashboardValue('inventoryCount', task.inventoryChange);
-            playSound(ui.soundSuccess);
-            nextTask();
-        }
-    });
-
-    ui.btnSale.addEventListener('click', () => {
-        if (tasks[currentTaskIndex].action === 'sale') {
-            const task = tasks[currentTaskIndex];
-            updateDashboardValue('totalSales', task.amount);
-            updateDashboardValue('inventoryCount', task.inventoryChange);
-            updateDashboardValue('receivableAhmad', task.receivable);
-            playSound(ui.soundSuccess);
-            nextTask();
-            
-            // This is the check inventory task
-            setTimeout(() => {
-                 if (tasks[currentTaskIndex].action === 'check') {
-                    tasks[currentTaskIndex].el.querySelector('div').innerHTML += ` <strong>پاسخ: ${ui.inventoryCount.textContent} دانه</strong>`;
-                    playSound(ui.soundSuccess);
-                    nextTask();
-                }
-            }, 500);
-        }
-    });
-    
-    // --- Start Game ---
-    startTimer();
+    init();
 });

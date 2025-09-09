@@ -2,46 +2,60 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>چالش روزنامچه</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="game-container">
-        <!-- Left Side: The Problems -->
-        <div class="problem-pane">
-            <h2>چالش: حسابات امروز را منظم کن!</h2>
+    <div class="game-world">
+        <!-- The "Phone" stays fixed at the top of the screen -->
+        <div class="sticky-header">
+            <div class="phone-frame">
+                <div class="screen">
+                    <div class="app-header"><h1>روزنامچه</h1></div>
+                    <div class="dashboard-content">
+                        <div class="metric"><span>مجموع فروش</span><strong id="total-sales">۰</strong></div>
+                        <div class="metric"><span>مجموع خرید</span><strong id="total-purchases">۰</strong></div>
+                        <div class="metric"><span>موجودی گدام (نوشابه)</span><strong id="inventory-count">۰</strong></div>
+                        <div class="metric"><span>طلب از احمد</span><strong id="receivable-ahmad">۰</strong></div>
+                    </div>
+                </div>
+            </div>
             <div class="timer">وقت باقی مانده: <span id="timer">60</span></div>
-            <ul class="task-list">
-                <li id="task-1" class="task-item active">
-                    <span class="icon">🛒</span>
-                    <div><strong>خرید:</strong> ۱۰ بکس نوشابه به قیمت ۴۰۰ (پرداخت نقدی)</div>
-                </li>
-                <li id="task-2" class="task-item">
-                    <span class="icon">💸</span>
-                    <div><strong>فروش:</strong> ۲ بکس نوشابه به قیمت ۵۰۰ به "احمد" (قرضه)</div>
-                </li>
-                <li id="task-3" class="task-item">
-                    <span class="icon">📦</span>
-                    <div><strong>چک کردن گدام:</strong> چند بکس نوشابه باقی مانده است؟</div>
-                </li>
-            </ul>
         </div>
 
-        <!-- Right Side: The App Simulation -->
-        <div class="phone-frame">
-            <div class="screen">
-                <div class="app-header"><h1>روزنامچه</h1></div>
-                <div class="dashboard-content">
-                    <div class="metric"><span>مجموع فروش</span><strong id="total-sales">۰</strong></div>
-                    <div class="metric"><span>مجموع خرید</span><strong id="total-purchases">۰</strong></div>
-                    <div class="metric"><span>موجودی گدام (نوشابه)</span><strong id="inventory-count">۰</strong></div>
-                    <div class="metric"><span>طلب از احمد</span><strong id="receivable-ahmad">۰</strong></div>
+        <!-- The scrolling task list -->
+        <div class="task-pane">
+            <h2>چالش: حسابات امروز را منظم کن!</h2>
+            
+            <div class="task-card" id="task-1">
+                <div class="task-icon">🛒</div>
+                <div class="task-text">
+                    <h3>خرید جدید</h3>
+                    <p>۱۰ بکس نوشابه به قیمت ۴۰۰ (پرداخت نقدی)</p>
                 </div>
-                <div class="action-buttons">
-                    <button id="btn-purchase" aria-label="Register Purchase">ثبت خرید</button>
-                    <button id="btn-sale" aria-label="Register Sale">ثبت فروش</button>
+                <button class="task-button" data-action="purchase">ثبت خرید</button>
+            </div>
+
+            <div class="task-card" id="task-2">
+                <div class="task-icon">💸</div>
+                <div class="task-text">
+                    <h3>فروش قرضه</h3>
+                    <p>۲ بکس نوشابه به قیمت ۵۰۰ به "احمد"</p>
+                </div>
+                <button class="task-button" data-action="sale">ثبت فروش</button>
+            </div>
+
+            <div class="task-card" id="task-3">
+                <div class="task-icon">📦</div>
+                <div class="task-text">
+                    <h3>چک کردن گدام</h3>
+                    <p>چند بکس نوشابه باقی مانده است؟ جواب را وارد کنید.</p>
+                </div>
+                <div class="inventory-answer">
+                    <input type="number" placeholder="تعداد؟" id="inventory-input">
+                    <button class="task-button" data-action="check">تایید</button>
                 </div>
             </div>
         </div>
