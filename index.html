@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>دموی زنده روزنامچه</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="phone-frame">
+        <div class="screen">
+            <div class="status-bar">
+                <div class="notch"></div>
+            </div>
+            
+            <div class="app-header">
+                <h1>داشبورد</h1>
+            </div>
+
+            <div class="dashboard-content">
+                <div class="metric">
+                    <span>مجموع فروش</span>
+                    <strong id="total-sales">۰.۰۰ افغانی</strong>
+                </div>
+                <div class="metric" id="inventory-metric">
+                    <span>موجودی گدام (کتاب)</span>
+                    <strong id="inventory-count">۱۰ دانه</strong>
+                </div>
+                <div class="metric">
+                    <span>موجودی نقد</span>
+                    <strong id="cash-on-hand">۵۰,۰۰۰.۰۰ افغانی</strong>
+                </div>
+            </div>
+
+            <button class="fab" id="fab-plus" aria-label="Add Transaction">+</button>
+
+            <!-- Pop-up Dialog (initially hidden) -->
+            <div class="dialog" id="add-sale-dialog">
+                <h3>ثبت فروش جدید</h3>
+                <div class="dialog-content">
+                    <p><strong>جنس:</strong> کتاب</p>
+                    <p><strong>تعداد:</strong> ۲ دانه</p>
+                    <p><strong>قیمت:</strong> ۲۵۰ افغانی</p>
+                </div>
+                <button class="dialog-button" id="save-sale-button">ذخیره</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guidance Pop-up Step 1 (Points to FAB) -->
+    <div class="guidance-box" id="guidance-step-1">
+        <p>برای ثبت فروش اول تان، اینجا را کلیک کنید!</p>
+        <div class="guidance-arrow-right"></div>
+    </div>
+
+    <!-- Guidance Pop-up Step 2 (Points to Inventory) -->
+    <div class="guidance-box" id="guidance-step-2">
+        <p>ببینید! موجودی گدام شما خود به خود کم شد.</p>
+        <div class="guidance-arrow-left"></div>
+    </div>
+
+    <!-- Final "Call to Action" Screen -->
+    <div class="final-screen" id="final-screen">
+        <h2>جادو را دیدید؟</h2>
+        <p>«روزنامچه» تمام حسابات شما را بطور خودکار و هوشمند مدیریت میکند.</p>
+        <a href="https://github.com/MLd10Sar/Esmat/releases/download/v1.0.0/app-release.apk" class="download-button">دانلود نسخه کامل</a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
