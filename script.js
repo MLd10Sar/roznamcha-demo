@@ -20,7 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
         btnSale: document.getElementById('btn-sale'),
         finalScreen: document.getElementById('final-screen'),
         finalTitle: document.getElementById('final-title'),
-        finalMessage: document.getElementById('final-message')
+        finalMessage: document.getElementById('final-message'),
+        finalScore: document.getElementById('final-score'),
+        soundSuccess: document.getElementById('sound-success'),
+        soundWin: document.getElementById('sound-win'),
+        soundLose: document.getElementById('sound-lose'),
     };
 
     // --- Game Logic ---
@@ -28,6 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
         timerInterval = setInterval(() => {
             timeLeft--;
             ui.timer.textContent = timeLeft;
+            if (timeLeft <= 5) {
+                ui.timer.style.color = '#fff';
+                ui.timer.style.backgroundColor = '#c82333';
+            }
             if (timeLeft <= 0) {
                 endGame(false); // Lose
             }
@@ -41,41 +49,49 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentTaskIndex < tasks.length) {
             tasks[currentTaskIndex].el.classList.add('active');
         } else {
-            endGame(true); // Win
+            setTimeout(() => endGame(true), 500); // Win with a slight delay
         }
     }
 
-    function updateDashboard(change) {
-        const updateEl = (el, newValue) => {
-            el.textContent = newValue.toLocaleString('en-US');
-            el.style.color = '#00BFA5';
-            setTimeout(() => { el.style.color = '#212529'; }, 500);
-        };
-        if (change.purchases) updateDashboardValue('totalPurchases', change.purchases);
-        if (change.sales) updateDashboardValue('totalSales', change.sales);
-        if (change.inventory) updateDashboardValue('inventoryCount', change.inventory);
-        if (change.receivable) updateDashboardValue('receivableAhmad', change.receivable);
-    }
-    
     function updateDashboardValue(key, change) {
         const el = ui[key];
         let currentValue = parseFloat(el.textContent.replace(/,/g, '')) || 0;
-        currentValue += change;
-        el.textContent = currentValue.toLocaleString('en-US');
+        const newValue = currentValue + change;
+        
+        // Animate the update
+        el.style.transform = 'scale(1.2)';
         el.style.color = '#00BFA5';
-        setTimeout(() => { el.style.color = '#212529'; }, 500);
+        setTimeout(() => {
+            el.textContent = newValue.toLocaleString('en-US');
+            el.style.transform = 'scale(1)';
+            el.style.color = '#212529';
+        }, 200);
     }
 
     function endGame(isWin) {
         clearInterval(timerInterval);
+        ui.btnPurchase.disabled = true;
+        ui.btnSale.disabled = true;
+        
         if (isWin) {
-            ui.finalTitle.textContent = "تبریک!";
+            ui.finalTitle.textContent = "عالی بود!";
             ui.finalMessage.textContent = "شما با موفقیت حسابات را منظم کردید. دیدید که با روزنامچه چقدر آسان است!";
+            ui.finalScore.textContent = timeLeft * 10; // Score based on time left
+            playSound(ui.soundWin);
         } else {
             ui.finalTitle.textContent = "وقت تمام شد!";
             ui.finalMessage.textContent = "مدیریت حسابات میتواند سخت باشد، اما روزنامچه آنرا آسان میسازد.";
+            ui.finalScore.textContent = 0;
+            playSound(ui.soundLose);
         }
         ui.finalScreen.classList.add('show');
+    }
+    
+    function playSound(soundElement) {
+        if (soundElement) {
+            soundElement.currentTime = 0;
+            soundElement.play();
+        }
     }
 
     // --- Event Listeners ---
@@ -84,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const task = tasks[currentTaskIndex];
             updateDashboardValue('totalPurchases', task.amount);
             updateDashboardValue('inventoryCount', task.inventoryChange);
+            playSound(ui.soundSuccess);
             nextTask();
         }
     });
@@ -94,11 +111,14 @@ document.addEventListener('DOMContentLoaded', () => {
             updateDashboardValue('totalSales', task.amount);
             updateDashboardValue('inventoryCount', task.inventoryChange);
             updateDashboardValue('receivableAhmad', task.receivable);
+            playSound(ui.soundSuccess);
             nextTask();
+            
             // This is the check inventory task
             setTimeout(() => {
                  if (tasks[currentTaskIndex].action === 'check') {
                     tasks[currentTaskIndex].el.querySelector('div').innerHTML += ` <strong>پاسخ: ${ui.inventoryCount.textContent} دانه</strong>`;
+                    playSound(ui.soundSuccess);
                     nextTask();
                 }
             }, 500);

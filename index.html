@@ -39,10 +39,9 @@
                     <div class="metric"><span>موجودی گدام (نوشابه)</span><strong id="inventory-count">۰</strong></div>
                     <div class="metric"><span>طلب از احمد</span><strong id="receivable-ahmad">۰</strong></div>
                 </div>
-                <!-- Action Buttons -->
                 <div class="action-buttons">
-                    <button id="btn-purchase">ثبت خرید</button>
-                    <button id="btn-sale">ثبت فروش</button>
+                    <button id="btn-purchase" aria-label="Register Purchase">ثبت خرید</button>
+                    <button id="btn-sale" aria-label="Register Sale">ثبت فروش</button>
                 </div>
             </div>
         </div>
@@ -50,10 +49,18 @@
 
     <!-- Final Win/Lose Screen -->
     <div class="final-screen" id="final-screen">
-        <h2 id="final-title"></h2>
-        <p id="final-message"></p>
-        <a href="YOUR_DOWNLOAD_LINK.apk" class="download-button">دانلود نسخه کامل</a>
+        <div class="final-content">
+            <h2 id="final-title"></h2>
+            <p id="final-message"></p>
+            <div class="score">امتیاز شما: <span id="final-score">0</span></div>
+            <a href="https://github.com/MLd10Sar/Esmat/releases/download/v1.0.0/app-release.apk" class="download-button">دانلود نسخه کامل</a>
+        </div>
     </div>
+
+    <!-- Audio files for sound effects -->
+    <audio id="sound-success" src="https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3" preload="auto"></audio>
+    <audio id="sound-win" src="https://assets.mixkit.co/sfx/preview/mixkit-video-game-win-2016.mp3" preload="auto"></audio>
+    <audio id="sound-lose" src="https://assets.mixkit.co/sfx/preview/mixkit-player-losing-or-failing-2042.mp3" preload="auto"></audio>
 
     <script src="script.js"></script>
 </body>
