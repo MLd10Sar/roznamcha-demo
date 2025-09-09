@@ -3,53 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دموی روزنامچه - داستان کسب و کار شما</title>
+    <title>چالش روزنامچه</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="game-container">
+        <!-- Left Side: The Problems -->
+        <div class="problem-pane">
+            <h2>چالش: حسابات امروز را منظم کن!</h2>
+            <div class="timer">وقت باقی مانده: <span id="timer">60</span></div>
+            <ul class="task-list">
+                <li id="task-1" class="task-item active">
+                    <span class="icon">🛒</span>
+                    <div><strong>خرید:</strong> ۱۰ بکس نوشابه به قیمت ۴۰۰ (پرداخت نقدی)</div>
+                </li>
+                <li id="task-2" class="task-item">
+                    <span class="icon">💸</span>
+                    <div><strong>فروش:</strong> ۲ بکس نوشابه به قیمت ۵۰۰ به "احمد" (قرضه)</div>
+                </li>
+                <li id="task-3" class="task-item">
+                    <span class="icon">📦</span>
+                    <div><strong>چک کردن گدام:</strong> چند بکس نوشابه باقی مانده است؟</div>
+                </li>
+            </ul>
+        </div>
 
-    <section class="scroll-section hero">
-        <div class="phone-mockup">
+        <!-- Right Side: The App Simulation -->
+        <div class="phone-frame">
             <div class="screen">
-                <img src="https://i.imgur.com/g0Q8Z2d.png" alt="Dashboard Screen">
+                <div class="app-header"><h1>روزنامچه</h1></div>
+                <div class="dashboard-content">
+                    <div class="metric"><span>مجموع فروش</span><strong id="total-sales">۰</strong></div>
+                    <div class="metric"><span>مجموع خرید</span><strong id="total-purchases">۰</strong></div>
+                    <div class="metric"><span>موجودی گدام (نوشابه)</span><strong id="inventory-count">۰</strong></div>
+                    <div class="metric"><span>طلب از احمد</span><strong id="receivable-ahmad">۰</strong></div>
+                </div>
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button id="btn-purchase">ثبت خرید</button>
+                    <button id="btn-sale">ثبت فروش</button>
+                </div>
             </div>
         </div>
-        <div class="text-content">
-            <h1>حساب و کتاب<br>در جیب شما</h1>
-            <p>«روزنامچه» دستیار هوشمند و آفلاین شما برای مدیریت کامل کسب و کار تان است.</p>
-        </div>
-    </section>
+    </div>
 
-    <section class="scroll-section purchase">
-        <div class="phone-mockup">
-            <div class="screen">
-                <img src="https://i.imgur.com/Qk9E9yJ.png" alt="Purchase Screen">
-            </div>
-        </div>
-        <div class="text-content">
-            <h2>گدام هوشمند</h2>
-            <p>با هر <strong>خرید</strong>، موجودی اجناس در گدام شما بطور خودکار و دقیق اضافه میشود. دیگر نیاز به شمارش کردن نیست!</p>
-        </div>
-    </section>
-
-    <section class="scroll-section sale">
-        <div class="phone-mockup">
-            <div class="screen">
-                <img src="https://i.imgur.com/k91Jv5c.png" alt="Sale Screen">
-            </div>
-        </div>
-        <div class="text-content">
-            <h2>فروش آسان</h2>
-            <p>با هر <strong>فروش</strong>، تعداد اجناس از گدام کم شده و مفاد شما بصورت زنده در داشبورد محاسبه میگردد.</p>
-        </div>
-    </section>
-
-    <section class="scroll-section final-cta">
-        <h2>آماده اید؟</h2>
-        <p>همین حالا «روزنامچه» را دانلود کرده و کسب و کار تان را به سطح جدیدی ببرید.</p>
-        <a href="https://github.com/MLd10Sar/Esmat/releases/download/v1.0.0/app-release.apk" class="download-button">دانلود نسخه کامل</a>
-    </section>
+    <!-- Final Win/Lose Screen -->
+    <div class="final-screen" id="final-screen">
+        <h2 id="final-title"></h2>
+        <p id="final-message"></p>
+        <a href="YOUR_DOWNLOAD_LINK.apk" class="download-button">دانلود نسخه کامل</a>
+    </div>
 
     <script src="script.js"></script>
 </body>
