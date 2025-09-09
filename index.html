@@ -2,74 +2,55 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>دموی زنده روزنامچه</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دموی روزنامچه - داستان کسب و کار شما</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800&display=swap" rel="stylesheet">
-    <!-- Use a relative path to ensure it's found -->
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="phone-frame">
-        <div class="screen">
-            <div class="status-bar">
-                <div class="notch"></div>
-            </div>
-            
-            <div class="app-header">
-                <h1>داشبورد</h1>
-            </div>
-
-            <div class="dashboard-content">
-                <div class="metric">
-                    <span>مجموع فروش</span>
-                    <strong id="total-sales">۰.۰۰ افغانی</strong>
-                </div>
-                <div class="metric" id="inventory-metric">
-                    <span>موجودی گدام (کتاب)</span>
-                    <strong id="inventory-count">۱۰ دانه</strong>
-                </div>
-                <div class="metric">
-                    <span>موجودی نقد</span>
-                    <strong id="cash-on-hand">۵۰,۰۰۰.۰۰ افغانی</strong>
-                </div>
-            </div>
-
-            <button class="fab" id="fab-plus" aria-label="Add Transaction">+</button>
-
-            <!-- Pop-up Dialog (initially hidden) -->
-            <div class="dialog" id="add-sale-dialog">
-                <h3>ثبت فروش جدید</h3>
-                <div class="dialog-content">
-                    <p><strong>جنس:</strong> کتاب</p>
-                    <p><strong>تعداد:</strong> ۲ دانه</p>
-                    <p><strong>قیمت:</strong> ۲۵۰ افغانی</p>
-                </div>
-                <button class="dialog-button" id="save-sale-button">ذخیره</button>
+    <section class="scroll-section hero">
+        <div class="phone-mockup">
+            <div class="screen">
+                <img src="https://i.imgur.com/g0Q8Z2d.png" alt="Dashboard Screen">
             </div>
         </div>
-    </div>
+        <div class="text-content">
+            <h1>حساب و کتاب<br>در جیب شما</h1>
+            <p>«روزنامچه» دستیار هوشمند و آفلاین شما برای مدیریت کامل کسب و کار تان است.</p>
+        </div>
+    </section>
 
-    <!-- Guidance Pop-up Step 1 (Points to FAB) -->
-    <div class="guidance-box" id="guidance-step-1">
-        <p>برای ثبت فروش اول تان، اینجا را کلیک کنید!</p>
-        <div class="guidance-arrow-right"></div>
-    </div>
+    <section class="scroll-section purchase">
+        <div class="phone-mockup">
+            <div class="screen">
+                <img src="https://i.imgur.com/Qk9E9yJ.png" alt="Purchase Screen">
+            </div>
+        </div>
+        <div class="text-content">
+            <h2>گدام هوشمند</h2>
+            <p>با هر <strong>خرید</strong>، موجودی اجناس در گدام شما بطور خودکار و دقیق اضافه میشود. دیگر نیاز به شمارش کردن نیست!</p>
+        </div>
+    </section>
 
-    <!-- Guidance Pop-up Step 2 (Points to Inventory) -->
-    <div class="guidance-box" id="guidance-step-2">
-        <p>ببینید! موجودی گدام شما خود به خود کم شد.</p>
-        <div class="guidance-arrow-left"></div>
-    </div>
+    <section class="scroll-section sale">
+        <div class="phone-mockup">
+            <div class="screen">
+                <img src="https://i.imgur.com/k91Jv5c.png" alt="Sale Screen">
+            </div>
+        </div>
+        <div class="text-content">
+            <h2>فروش آسان</h2>
+            <p>با هر <strong>فروش</strong>، تعداد اجناس از گدام کم شده و مفاد شما بصورت زنده در داشبورد محاسبه میگردد.</p>
+        </div>
+    </section>
 
-    <!-- Final "Call to Action" Screen -->
-    <div class="final-screen" id="final-screen">
-        <h2>جادو را دیدید؟</h2>
-        <p>«روزنامچه» تمام حسابات شما را بطور خودکار و هوشمند مدیریت میکند.</p>
+    <section class="scroll-section final-cta">
+        <h2>آماده اید؟</h2>
+        <p>همین حالا «روزنامچه» را دانلود کرده و کسب و کار تان را به سطح جدیدی ببرید.</p>
         <a href="https://github.com/MLd10Sar/Esmat/releases/download/v1.0.0/app-release.apk" class="download-button">دانلود نسخه کامل</a>
-    </div>
+    </section>
 
-    <!-- Use a relative path to ensure it's found -->
-    <script src="./script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
