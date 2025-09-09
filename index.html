@@ -2,63 +2,46 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>چالش روزنامچه</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دموی زنده روزنامچه</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="game-world">
-        <!-- The "Phone" stays fixed at the top of the screen -->
-        <div class="sticky-header">
-            <div class="phone-frame">
-                <div class="screen">
-                    <div class="app-header"><h1>روزنامچه</h1></div>
-                    <div class="dashboard-content">
-                        <div class="metric"><span>مجموع فروش</span><strong id="total-sales">۰</strong></div>
-                        <div class="metric"><span>مجموع خرید</span><strong id="total-purchases">۰</strong></div>
-                        <div class="metric"><span>موجودی گدام (نوشابه)</span><strong id="inventory-count">۰</strong></div>
-                        <div class="metric"><span>طلب از احمد</span><strong id="receivable-ahmad">۰</strong></div>
-                    </div>
-                </div>
-            </div>
+    <div class="demo-container">
+
+        <header class="app-header">
+            <h1>روزنامچه</h1>
             <div class="timer">وقت باقی مانده: <span id="timer">60</span></div>
-        </div>
+        </header>
 
-        <!-- The scrolling task list -->
-        <div class="task-pane">
-            <h2>چالش: حسابات امروز را منظم کن!</h2>
-            
-            <div class="task-card" id="task-1">
-                <div class="task-icon">🛒</div>
-                <div class="task-text">
-                    <h3>خرید جدید</h3>
-                    <p>۱۰ بکس نوشابه به قیمت ۴۰۰ (پرداخت نقدی)</p>
+        <main class="ledger">
+            <div class="ledger-summary" id="summary-card">
+                <h2>خلاصه حسابات</h2>
+                <div class="metric">
+                    <span>موجودی گدام (نوشابه):</span>
+                    <strong id="inventory-count">۰ دانه</strong>
                 </div>
-                <button class="task-button" data-action="purchase">ثبت خرید</button>
+                <div class="metric">
+                    <span>مجموع طلب:</span>
+                    <strong id="receivable-total">۰ افغانی</strong>
+                </div>
             </div>
 
-            <div class="task-card" id="task-2">
-                <div class="task-icon">💸</div>
-                <div class="task-text">
-                    <h3>فروش قرضه</h3>
-                    <p>۲ بکس نوشابه به قیمت ۵۰۰ به "احمد"</p>
-                </div>
-                <button class="task-button" data-action="sale">ثبت فروش</button>
+            <div class="task-prompt" id="task-prompt">
+                <p id="task-text"></p>
             </div>
 
-            <div class="task-card" id="task-3">
-                <div class="task-icon">📦</div>
-                <div class="task-text">
-                    <h3>چک کردن گدام</h3>
-                    <p>چند بکس نوشابه باقی مانده است؟ جواب را وارد کنید.</p>
-                </div>
-                <div class="inventory-answer">
-                    <input type="number" placeholder="تعداد؟" id="inventory-input">
-                    <button class="task-button" data-action="check">تایید</button>
-                </div>
+            <div class="transaction-list" id="transaction-list">
+                <!-- Transactions will be added here dynamically by JavaScript -->
             </div>
-        </div>
+        </main>
+
+        <footer class="action-bar">
+            <button id="btn-purchase" disabled>ثبت خرید</button>
+            <button id="btn-sale" disabled>ثبت فروش</button>
+        </footer>
+
     </div>
 
     <!-- Final Win/Lose Screen -->

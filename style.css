@@ -3,232 +3,131 @@
     --secondary-color: #00BFA5;
     --success-color: #28a745;
     --danger-color: #dc3545;
-    --light-bg: #f4f6f9;
+    --light-bg: #f8f9fa;
     --card-bg: #ffffff;
+    --dark-text: #212529;
+    --light-text: #ffffff;
+    --muted-text: #6c757d;
 }
 
 body {
     font-family: 'Vazirmatn', sans-serif;
-    background-color: var(--light-bg);
+    background-color: #e9ecef;
     margin: 0;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.game-world {
-    max-width: 450px;
-    margin: 0 auto;
-    background-color: var(--card-bg);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
 }
 
-.sticky-header {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background: var(--card-bg);
-    padding: 20px 0 0 0;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-
-.phone-frame {
-    width: 300px;
-    height: 180px;
-    margin: 0 auto;
-    border: 8px solid #111;
-    border-radius: 30px;
-    background: #f8f9fa;
-    display: flex;
-    flex-direction: column;
-    padding: 4px;
-}
-
-.screen {
+.demo-container {
     width: 100%;
-    height: 100%;
+    max-width: 420px;
+    height: 800px;
+    max-height: 90vh;
+    background-color: var(--light-bg);
+    border-radius: 30px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
     display: flex;
     flex-direction: column;
-    background-color: #fff;
-    border-radius: 22px;
     overflow: hidden;
 }
 
 .app-header {
     background-color: var(--primary-color);
-    color: #fff;
-    padding: 8px;
+    color: var(--light-text);
+    padding: 15px 20px;
     text-align: center;
-    border-top-left-radius: 22px;
-    border-top-right-radius: 22px;
+    flex-shrink: 0;
+}
+.app-header h1 { margin: 0; font-size: 1.5rem; }
+.timer { font-size: 0.9rem; opacity: 0.8; }
+
+.ledger {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
 }
 
-.app-header h1 {
-    margin: 0;
-    font-size: 1rem;
+.ledger-summary {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+.ledger-summary h2 { margin: 0 0 15px 0; font-size: 1.3rem; color: var(--primary-color); }
+.metric { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; font-size: 1.1rem; }
+.metric strong { font-weight: 700; transition: transform 0.3s; }
+
+.task-prompt {
+    text-align: center;
+    padding: 15px;
+    background-color: #e2d9f3;
+    color: var(--primary-color);
+    border-radius: 8px;
+    margin-bottom: 20px;
     font-weight: 700;
 }
 
-.dashboard-content {
-    padding: 8px 12px;
-    flex-grow: 1;
+.transaction-list {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    gap: 10px;
 }
 
-.metric {
+.transaction-item {
+    background: var(--card-bg);
+    padding: 15px;
+    border-radius: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.8rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.5s forwards;
+}
+@keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.metric span {
-    color: #555;
-}
+.transaction-item .description { font-weight: 700; }
+.transaction-item .customer { font-size: 0.9rem; color: var(--muted-text); }
+.transaction-item .amount { font-weight: 700; font-size: 1.2rem; }
+.transaction-item .amount.sale { color: var(--success-color); }
+.transaction-item .amount.purchase { color: var(--danger-color); }
 
-.metric strong {
-    font-size: 0.9rem;
-    font-weight: 700;
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease-out;
-}
-
-.timer {
-    text-align: center;
-    font-weight: 700;
-    color: var(--dark-text);
-    padding: 15px;
-    font-size: 1.1rem;
-    transition: background-color 0.5s, color 0.5s;
-}
-
-.task-pane {
-    padding: 20px;
-}
-
-.task-pane h2 {
-    text-align: center;
-    color: var(--primary-color);
-    margin: 0 0 30px 0;
-    font-size: 1.8rem;
-}
-
-.task-card {
-    background: #f8f9fa;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-    opacity: 0.4;
-    transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
-    border-left: 5px solid transparent;
-}
-
-.task-card.active {
-    opacity: 1;
-    transform: scale(1.03);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-    border-left-color: var(--secondary-color);
-}
-
-.task-card.completed {
-    opacity: 0.3;
-    background-color: #e9ecef;
-}
-
-.task-card.completed .task-button,
-.task-card.completed .inventory-answer {
-    display: none;
-}
-
-.task-icon {
-    font-size: 2rem;
-    float: right;
-    margin-right: -10px;
-}
-
-.task-text h3 {
-    margin: 0 0 5px 0;
-    font-size: 1.3rem;
-    font-weight: 700;
-}
-
-.task-text p {
-    margin: 0;
-    color: #555;
-    line-height: 1.6;
-}
-
-.task-button {
-    background-color: var(--secondary-color);
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-family: 'Vazirmatn', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    display: block;
-    margin-top: 15px;
-    transition: background-color 0.2s, transform 0.2s;
-}
-.task-button:hover {
-    transform: scale(1.05);
-}
-
-.inventory-answer {
+.action-bar {
     display: flex;
     gap: 10px;
-    margin-top: 15px;
-    align-items: center;
+    padding: 15px;
+    background-color: var(--card-bg);
+    border-top: 1px solid #eee;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
 }
-
-#inventory-input {
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
-    width: 100px;
-    text-align: center;
-    font-size: 1rem;
+.action-bar button {
+    flex-grow: 1;
+    background-color: var(--secondary-color);
+    color: var(--light-text);
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
     font-family: 'Vazirmatn', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
 }
-#inventory-input:focus {
-    outline: none;
-    border-color: var(--primary-color);
-}
+.action-bar button:disabled { background-color: #ccc; cursor: not-allowed; }
+.action-bar button:not(:disabled):hover { background-color: #009688; transform: scale(1.03); }
 
-.final-screen {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.85);
-    color: #fff;
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    z-index: 100;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.final-screen.show {
-    display: flex;
-    opacity: 1;
-}
-
-.final-content {
-    transform: scale(0.8);
-    opacity: 0;
-    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-@keyframes popIn {
-    to { transform: scale(1); opacity: 1; }
-}
-
+/* Final Screen Styles */
+.final-screen { position: fixed; inset: 0; background: rgba(0,0,0,0.85); color: var(--light-text); display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; z-index: 100; opacity: 0; transition: opacity 0.5s ease; }
+.final-screen.show { display: flex; opacity: 1; }
+.final-content { transform: scale(0.8); opacity: 0; animation: popIn 0.5s forwards; }
+@keyframes popIn { to { transform: scale(1); opacity: 1; } }
 .final-screen h2 { font-size: 3.5rem; font-weight: 800; margin: 0; }
-.final-screen p { font-size: 1.2rem; max-width: 400px; margin: 15px 20px 0 20px; }
+.final-screen p { font-size: 1.2rem; max-width: 400px; margin: 15px 0 0 0; }
 .score { font-size: 1.5rem; font-weight: 700; margin-top: 20px; background: rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 10px; }
-.download-button { text-decoration: none; background-color: var(--secondary-color); color: #fff; padding: 15px 30px; border-radius: 30px; margin-top: 30px; font-weight: 700; transition: transform 0.2s; }
+.download-button { text-decoration: none; background-color: var(--secondary-color); color: var(--light-text); padding: 15px 30px; border-radius: 30px; margin-top: 30px; font-weight: 700; transition: transform 0.2s; }
 .download-button:hover { transform: scale(1.05); }
